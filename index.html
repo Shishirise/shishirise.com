@@ -1,11 +1,14 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shishir Adhikari - Portfolio</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #fff; color: #000; }
         .container { width: 80%; margin: auto; overflow: hidden; }
@@ -19,6 +22,7 @@
         .github { color: #181717; }
     </style>
 </head>
+
 <body>
     <header>
         <img src="https://thumbs2.imgbox.com/dc/aa/0NkmksLa_t.png" width="200" alt="Shishir Adhikari">
@@ -26,59 +30,52 @@
         <p>Computer Science Undergraduate | Software Developer | Game Developer</p>
         <p>Contact: 682-344-8720 | shishiradhikari2058@gmail.com | Wichita Falls, TX</p>
         <p>
-            <a href="https://www.linkedin.com/in/shishir-adhikari-6b07ba22a/" target="_blank" class="linkedin">🔗 <span style="color:#0077B5;">LinkedIn</span></a> | 
-            <a href="https://github.com/Shishirise" target="_blank" class="github">💻 <span style="color:#181717;">GitHub</span></a>
+            <a href="https://www.linkedin.com/in/shishir-adhikari-6b07ba22a/" target="_blank" class="linkedin">🔗 LinkedIn</a> | 
+            <a href="https://github.com/Shishirise" target="_blank" class="github">💻 GitHub</a>
         </p>
     </header>
-    
+
     <div class="container">
         <section>
             <h2>About Me</h2>
-            <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design. With a background in algorithmic problem-solving and system development, I constantly seek innovative ways to bridge the gap between technology and real-world challenges. My journey has been fueled by a deep curiosity for emerging technologies and a commitment to continuous learning.</p>
+            <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design. With a background in algorithmic problem-solving and system development, I constantly seek innovative ways to bridge the gap between technology and real-world challenges.</p>
         </section>
 
         <section>
             <h2>Education</h2>
-            <p>Pursuing a Bachelor’s degree in Computer Science at Midwestern State University, Texas, where I focus on software development, AI, and research-driven projects. Previously, I attended Dallas College, Irving, Texas, where I built a strong programming foundation. My academic journey also includes experience at Norwich University, Vermont, where I explored advanced computing concepts.</p>
+            <p>Pursuing a Bachelor’s degree in Computer Science at Midwestern State University, Texas.</p>
         </section>
-        
+
         <section>
             <h2>Work Experience</h2>
             <h3>Game Developer - Midwestern State University</h3>
-            <p>Developed “Escape the Game,” a 2D platformer for Game Jam 2024. Engineered game physics, implemented interactive mechanics, and optimized level design using GameMaker Studio. Managed asset handling with JSON for structured game resource management, ensuring a seamless and engaging user experience.</p>
-            
-            <h3>Computer Science Tutor</h3>
-            <p>Provided hands-on training in Java, Python, and HTML, guiding students through data structures, OOP principles, and algorithmic problem-solving. Designed interactive exercises, mentored students in debugging techniques, and conducted mock coding interviews to prepare them for technical assessments.</p>
-            
-            <h3>Demographer - Census of Nepal</h3>
-            <p>Conducted extensive data collection and demographic analysis for the Nepal Census 2021. Ensured accuracy and compliance in statistical reporting, synchronized collected data into national databases, and maintained strict confidentiality while analyzing socioeconomic patterns.</p>
+            <p>Developed “Escape the Game,” a 2D platformer for Game Jam 2024.</p>
         </section>
-        
+
         <section>
             <h2>Projects</h2>
             <h3>Mega Millions Lottery Simulation</h3>
-            <p>Designed a C++ lottery simulation leveraging arrays, vectors, and sorting algorithms for an interactive user experience. Applied OOP principles to ensure modularity and maintainability, while implementing robust error handling for enhanced usability.</p>
-            
-            <h3>Additional Projects</h3>
-            <ul>
-                <li><strong>Slot Machine (C++)</strong> - A text-based slot machine game featuring random number generation and probability-based outcomes.</li>
-                <li><strong>Sudoku Generator (Python)</strong> - Developed an algorithm-driven Sudoku puzzle generator with backtracking for efficient puzzle generation.</li>
-                <li><strong>Maze Game Generator (JavaScript, HTML, CSS)</strong> - Created a dynamic, web-based maze navigation game with procedurally generated levels.</li>
-            </ul>
+            <p>Designed a C++ lottery simulation using OOP principles.</p>
         </section>
-        
+
         <section>
             <h2>Technical Skills</h2>
             <ul>
-                <li><strong>Programming:</strong> C, C++, Java, Python, JavaScript, React</li>
-                <li><strong>Web Development:</strong> HTML, CSS, JavaScript, ReactJS, Next.js</li>
-                <li><strong>Software Development:</strong> OOP, DSA, Design Patterns, Multithreading</li>
-                <li><strong>Database & APIs:</strong> Node.js, Express.js, MySQL, SQL, Firebase, JSON</li>
-                <li><strong>Version Control:</strong> GitHub, Google Colab</li>
-                <li><strong>Game Development:</strong> GameMaker Studio, Game Level Design, JSON Asset Management</li>
-                <li><strong>AI & Data Science:</strong> Jupyter Notebook, TensorFlow, OpenCV</li>
+                <li><strong>Programming:</strong> C, C++, Java, Python, JavaScript</li>
+                <li><strong>Web Development:</strong> HTML, CSS, JavaScript, React</li>
+                <li><strong>AI & Data Science:</strong> TensorFlow, OpenCV</li>
             </ul>
         </section>
     </div>
+
+    <!-- Register Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+            .then(() => console.log("Service Worker Registered"))
+            .catch(err => console.log("Service Worker Failed:", err));
+        }
+    </script>
+
 </body>
 </html>
