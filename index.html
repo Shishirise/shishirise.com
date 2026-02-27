@@ -9,7 +9,7 @@
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#000000">
 
-<!-- iOS Support -->
+<!-- Apple Support -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Shishirise">
@@ -38,9 +38,7 @@ header img {
     margin-bottom: 15px;
 }
 
-h1 {
-    margin: 10px 0;
-}
+h1 { margin: 10px 0; }
 
 .container {
     width: 85%;
@@ -54,6 +52,18 @@ section {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.linkedin { color: #0077B5; }
+.github { color: #181717; }
 
 /* INSTALL BUTTON */
 #installBtn {
@@ -73,18 +83,6 @@ section {
     background: #333;
 }
 
-a {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.linkedin { color: #0077B5; }
-.github { color: #181717; }
-
 @media (max-width: 600px) {
     .container { width: 95%; }
 }
@@ -96,7 +94,6 @@ a:hover {
 <header>
     <img src="https://thumbs2.imgbox.com/dc/aa/0NkmksLa_t.png" alt="Shishir Adhikari">
 
-    <!-- SIMPLE INSTALL BUTTON -->
     <button id="installBtn">Install</button>
 
     <h1>Shishir Adhikari</h1>
@@ -112,69 +109,79 @@ a:hover {
 <div class="container">
     <section>
         <h2>About Me</h2>
-        <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design.</p>
+        <p>I am a passionate Computer Science student with a strong interest in software development and AI.</p>
     </section>
 
     <section>
         <h2>Education</h2>
         <p>Pursuing a Bachelor’s degree in Computer Science at Midwestern State University, Texas.</p>
     </section>
-
-    <section>
-        <h2>Work Experience</h2>
-        <h3>Game Developer - Midwestern State University</h3>
-        <p>Developed “Escape the Game,” a 2D platformer for Game Jam 2024.</p>
-    </section>
-
-    <section>
-        <h2>Projects</h2>
-        <h3>Mega Millions Lottery Simulation</h3>
-        <p>Designed a C++ lottery simulation using OOP principles.</p>
-    </section>
-
-    <section>
-        <h2>Technical Skills</h2>
-        <ul>
-            <li><strong>Programming:</strong> C, C++, Java, Python, JavaScript</li>
-            <li><strong>Web Development:</strong> HTML, CSS, JavaScript, React</li>
-            <li><strong>AI & Data Science:</strong> TensorFlow, OpenCV</li>
-        </ul>
-    </section>
 </div>
 
 <script>
-/* Register Service Worker */
+
+// Register Service Worker
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js');
 }
 
-let deferredPrompt;
+let deferredPrompt = null;
 const installBtn = document.getElementById("installBtn");
 
-/* Capture install event (Android/Desktop only) */
+// Detect platform
+function isIos() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+
+function isMacSafari() {
+    return /macintosh/i.test(navigator.userAgent) &&
+           /safari/i.test(navigator.userAgent) &&
+           !/chrome/i.test(navigator.userAgent);
+}
+
+function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.navigator.standalone === true;
+}
+
+// Hide button if already installed
+if (isStandalone()) {
+    installBtn.style.display = "none";
+}
+
+// Capture install event (Chrome / Edge / Android)
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
 });
 
-/* Button Click */
+// Install button behavior
 installBtn.addEventListener("click", async () => {
 
-    // Android/Desktop
+    // Chrome / Edge (Windows, Mac, Android)
     if (deferredPrompt) {
         deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
+        await deferredPrompt.userChoice;
         deferredPrompt = null;
+        return;
     }
-    // iPhone
-    else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-        alert("To install on iPhone:\n\nOpen in Safari → Tap Share → Add to Home Screen");
+
+    // iPhone / iPad
+    if (isIos()) {
+        alert("To install on iPhone/iPad:\n\n1. Open in Safari\n2. Tap Share\n3. Tap 'Add to Home Screen'");
+        return;
     }
-    // Other cases
-    else {
-        alert("Install is not available on this device.");
+
+    // Mac Safari
+    if (isMacSafari()) {
+        alert("To install on Mac Safari:\n\n1. Click Share in Safari toolbar\n2. Select 'Add to Dock'");
+        return;
     }
+
+    // Fallback
+    alert("For best install experience, use Chrome or Edge browser.");
 });
+
 </script>
 
 </body>
