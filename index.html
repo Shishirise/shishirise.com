@@ -64,19 +64,12 @@ section {
     font-weight: bold;
     cursor: pointer;
     font-size: 16px;
+    display: none;
 }
 
 #installBtn:hover {
     background: #333;
 }
-
-a {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.linkedin { color: #0077B5; }
-.github { color: #181717; }
 </style>
 </head>
 
@@ -100,24 +93,21 @@ a {
 </div>
 
 <script>
-
-// Register Service Worker
+/* =========================
+   SERVICE WORKER
+========================= */
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js');
 }
 
-let deferredPrompt = null;
+/* =========================
+   INSTALL LOGIC
+========================= */
+let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
 
-// Detect platform
-function isIos() {
+function isIOS() {
     return /iphone|ipad|ipod/i.test(navigator.userAgent);
-}
-
-function isMacSafari() {
-    return /macintosh/i.test(navigator.userAgent) &&
-           /safari/i.test(navigator.userAgent) &&
-           !/chrome/i.test(navigator.userAgent);
 }
 
 function isStandalone() {
@@ -125,21 +115,21 @@ function isStandalone() {
            window.navigator.standalone === true;
 }
 
-// Hide button if already installed
-if (isStandalone()) {
-    installBtn.style.display = "none";
+/* Hide button if already installed */
+if (!isStandalone()) {
+    installBtn.style.display = "inline-block";
 }
 
-// Capture install event (Chrome / Edge / Android)
-window.addEventListener("beforeinstallprompt", (e) => {
+/* Capture Chrome install event */
+window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
 });
 
-// Install button behavior
-installBtn.addEventListener("click", async () => {
+/* Install button click */
+installBtn.addEventListener('click', async () => {
 
-    // Chrome / Edge (Windows, Mac, Android)
+    // Chrome (Mac/Windows/Android)
     if (deferredPrompt) {
         deferredPrompt.prompt();
         await deferredPrompt.userChoice;
@@ -147,22 +137,19 @@ installBtn.addEventListener("click", async () => {
         return;
     }
 
-    // iPhone / iPad
-    if (isIos()) {
-        alert("To install on iPhone/iPad:\n\n1. Open in Safari\n2. Tap Share\n3. Tap 'Add to Home Screen'");
+    // iPhone (Chrome uses Safari engine)
+    if (isIOS()) {
+        alert(
+            "To install on iPhone:\n\n" +
+            "1. Open this site in Safari\n" +
+            "2. Tap the Share button\n" +
+            "3. Tap 'Add to Home Screen'"
+        );
         return;
     }
 
-    // Mac Safari
-    if (isMacSafari()) {
-        alert("To install on Mac Safari:\n\n1. Click Share in Safari toolbar\n2. Select 'Add to Dock'");
-        return;
-    }
-
-    // Fallback
-    alert("For best install experience, use Chrome or Edge browser.");
+    alert("Install not supported in this browser. Use Chrome.");
 });
-
 </script>
 
 </body>
