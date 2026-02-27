@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Shishir Adhikari - Portfolio</title>
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#000000">
+
+    <!-- Apple iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Shishirise">
+    <link rel="apple-touch-icon" href="shishir192.png">
 
     <style>
         body {
@@ -18,15 +25,9 @@
             color: #000;
         }
 
-        .container {
-            width: 85%;
-            margin: auto;
-            overflow: hidden;
-        }
-
         header {
             background: #fff;
-            padding: 40px 0;
+            padding: 40px 20px;
             text-align: center;
             border-bottom: 2px solid #ddd;
         }
@@ -38,12 +39,11 @@
             margin-bottom: 15px;
         }
 
-        h1 {
-            margin: 10px 0;
-        }
+        h1 { margin: 10px 0; }
 
-        h2 {
-            color: #333;
+        .container {
+            width: 85%;
+            margin: auto;
         }
 
         section {
@@ -54,14 +54,8 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        a {
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
+        a { text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
 
         .linkedin { color: #0077B5; }
         .github { color: #181717; }
@@ -85,10 +79,16 @@
             transform: scale(1.05);
         }
 
+        /* iOS Install Message */
+        #iosInstallMsg {
+            display: none;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #444;
+        }
+
         @media (max-width: 600px) {
-            .container {
-                width: 95%;
-            }
+            .container { width: 95%; }
         }
     </style>
 </head>
@@ -98,8 +98,13 @@
 <header>
     <img src="https://thumbs2.imgbox.com/dc/aa/0NkmksLa_t.png" alt="Shishir Adhikari">
 
-    <!-- Install Button Below Photo -->
+    <!-- Install Button -->
     <button id="installBtn">Install Shishirise App</button>
+
+    <!-- iPhone Install Instructions -->
+    <div id="iosInstallMsg">
+        Tap <strong>Share</strong> → <strong>Add to Home Screen</strong> to install.
+    </div>
 
     <h1>Shishir Adhikari</h1>
     <p>Computer Science Undergraduate | Software Developer | Game Developer</p>
@@ -114,7 +119,7 @@
 
     <section>
         <h2>About Me</h2>
-        <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design. With a background in algorithmic problem-solving and system development, I constantly seek innovative ways to bridge the gap between technology and real-world challenges.</p>
+        <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design.</p>
     </section>
 
     <section>
@@ -145,18 +150,19 @@
 
 </div>
 
-<!-- Register Service Worker -->
 <script>
+    // Register Service Worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
             .then(() => console.log("Service Worker Registered"))
             .catch(err => console.log("Service Worker Failed:", err));
     }
 
-    // PWA INSTALL LOGIC
     let deferredPrompt;
     const installBtn = document.getElementById("installBtn");
+    const iosMsg = document.getElementById("iosInstallMsg");
 
+    // Android/Desktop Install Prompt
     window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         deferredPrompt = e;
@@ -172,6 +178,19 @@
             installBtn.style.display = "none";
         }
     });
+
+    // iOS Detection
+    function isIos() {
+        return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+    }
+
+    function isInStandaloneMode() {
+        return ('standalone' in window.navigator) && window.navigator.standalone;
+    }
+
+    if (isIos() && !isInStandaloneMode()) {
+        iosMsg.style.display = "block";
+    }
 </script>
 
 </body>
