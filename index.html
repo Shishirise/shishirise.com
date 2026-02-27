@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Shishir Adhikari - Portfolio</title>
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#000000">
 
-    <!-- Apple iOS PWA Support -->
+    <!-- Apple iOS Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Shishirise">
@@ -39,7 +38,9 @@
             margin-bottom: 15px;
         }
 
-        h1 { margin: 10px 0; }
+        h1 {
+            margin: 10px 0;
+        }
 
         .container {
             width: 85%;
@@ -54,8 +55,14 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        a { text-decoration: none; font-weight: bold; }
-        a:hover { text-decoration: underline; }
+        a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
 
         .linkedin { color: #0077B5; }
         .github { color: #181717; }
@@ -63,7 +70,7 @@
         /* INSTALL BUTTON */
         #installBtn {
             display: none;
-            margin: 15px auto;
+            margin: 10px auto 15px auto;
             padding: 12px 25px;
             background: black;
             color: white;
@@ -82,13 +89,15 @@
         /* iOS Install Message */
         #iosInstallMsg {
             display: none;
-            margin-top: 10px;
+            margin-bottom: 10px;
             font-size: 14px;
-            color: #444;
+            color: #555;
         }
 
         @media (max-width: 600px) {
-            .container { width: 95%; }
+            .container {
+                width: 95%;
+            }
         }
     </style>
 </head>
@@ -98,15 +107,16 @@
 <header>
     <img src="https://thumbs2.imgbox.com/dc/aa/0NkmksLa_t.png" alt="Shishir Adhikari">
 
-    <!-- Install Button -->
+    <!-- Install Button ABOVE NAME -->
     <button id="installBtn">Install Shishirise App</button>
 
-    <!-- iPhone Install Instructions -->
+    <!-- iPhone Instruction -->
     <div id="iosInstallMsg">
         Tap <strong>Share</strong> → <strong>Add to Home Screen</strong> to install.
     </div>
 
     <h1>Shishir Adhikari</h1>
+
     <p>Computer Science Undergraduate | Software Developer | Game Developer</p>
     <p>Contact: 682-344-8720 | shishiradhikari2058@gmail.com | Wichita Falls, TX</p>
     <p>
