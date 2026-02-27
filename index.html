@@ -10,134 +10,169 @@
     <meta name="theme-color" content="#000000">
 
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #fff; color: #000; }
-        .container { width: 80%; margin: auto; overflow: hidden; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #000;
+        }
+
+        .container {
+            width: 85%;
+            margin: auto;
+            overflow: hidden;
+        }
 
         header {
             background: #fff;
-            color: #000;
-            padding: 20px 0;
+            padding: 40px 0;
             text-align: center;
-            border-bottom: 2px solid #333;
-            position: relative;
+            border-bottom: 2px solid #ddd;
         }
 
-        header img { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 10px; }
+        header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
 
-        h1, h2, h3 { color: #333; }
+        h1 {
+            margin: 10px 0;
+        }
+
+        h2 {
+            color: #333;
+        }
 
         section {
             background: #fff;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-            box-shadow: 0 0 10px #ccc;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        a { text-decoration: none; font-weight: bold; }
-        a:hover { text-decoration: underline; }
+        a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
         .linkedin { color: #0077B5; }
         .github { color: #181717; }
 
-        /* Install Button Style */
+        /* INSTALL BUTTON */
         #installBtn {
             display: none;
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            margin: 15px auto;
+            padding: 12px 25px;
             background: black;
             color: white;
             border: none;
-            padding: 10px 18px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.3s ease;
         }
 
         #installBtn:hover {
             background: #333;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <button id="installBtn">Install</button>
+<header>
+    <img src="https://thumbs2.imgbox.com/dc/aa/0NkmksLa_t.png" alt="Shishir Adhikari">
 
-        <img src="https://thumbs2.imgbox.com/dc/aa/0NkmksLa_t.png" alt="Shishir Adhikari">
-        <h1>Shishir Adhikari</h1>
-        <p>Computer Science Undergraduate | Software Developer | Game Developer</p>
-        <p>Contact: 682-344-8720 | shishiradhikari2058@gmail.com | Wichita Falls, TX</p>
-        <p>
-            <a href="https://www.linkedin.com/in/shishir-adhikari-6b07ba22a/" target="_blank" class="linkedin">🔗 LinkedIn</a> | 
-            <a href="https://github.com/Shishirise" target="_blank" class="github">💻 GitHub</a>
-        </p>
-    </header>
+    <!-- Install Button Below Photo -->
+    <button id="installBtn">Install Shishirise App</button>
 
-    <div class="container">
+    <h1>Shishir Adhikari</h1>
+    <p>Computer Science Undergraduate | Software Developer | Game Developer</p>
+    <p>Contact: 682-344-8720 | shishiradhikari2058@gmail.com | Wichita Falls, TX</p>
+    <p>
+        <a href="https://www.linkedin.com/in/shishir-adhikari-6b07ba22a/" target="_blank" class="linkedin">🔗 LinkedIn</a> |
+        <a href="https://github.com/Shishirise" target="_blank" class="github">💻 GitHub</a>
+    </p>
+</header>
 
-        <section>
-            <h2>About Me</h2>
-            <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design. With a background in algorithmic problem-solving and system development, I constantly seek innovative ways to bridge the gap between technology and real-world challenges.</p>
-        </section>
+<div class="container">
 
-        <section>
-            <h2>Education</h2>
-            <p>Pursuing a Bachelor’s degree in Computer Science at Midwestern State University, Texas.</p>
-        </section>
+    <section>
+        <h2>About Me</h2>
+        <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design. With a background in algorithmic problem-solving and system development, I constantly seek innovative ways to bridge the gap between technology and real-world challenges.</p>
+    </section>
 
-        <section>
-            <h2>Work Experience</h2>
-            <h3>Game Developer - Midwestern State University</h3>
-            <p>Developed “Escape the Game,” a 2D platformer for Game Jam 2024.</p>
-        </section>
+    <section>
+        <h2>Education</h2>
+        <p>Pursuing a Bachelor’s degree in Computer Science at Midwestern State University, Texas.</p>
+    </section>
 
-        <section>
-            <h2>Projects</h2>
-            <h3>Mega Millions Lottery Simulation</h3>
-            <p>Designed a C++ lottery simulation using OOP principles.</p>
-        </section>
+    <section>
+        <h2>Work Experience</h2>
+        <h3>Game Developer - Midwestern State University</h3>
+        <p>Developed “Escape the Game,” a 2D platformer for Game Jam 2024.</p>
+    </section>
 
-        <section>
-            <h2>Technical Skills</h2>
-            <ul>
-                <li><strong>Programming:</strong> C, C++, Java, Python, JavaScript</li>
-                <li><strong>Web Development:</strong> HTML, CSS, JavaScript, React</li>
-                <li><strong>AI & Data Science:</strong> TensorFlow, OpenCV</li>
-            </ul>
-        </section>
+    <section>
+        <h2>Projects</h2>
+        <h3>Mega Millions Lottery Simulation</h3>
+        <p>Designed a C++ lottery simulation using OOP principles.</p>
+    </section>
 
-    </div>
+    <section>
+        <h2>Technical Skills</h2>
+        <ul>
+            <li><strong>Programming:</strong> C, C++, Java, Python, JavaScript</li>
+            <li><strong>Web Development:</strong> HTML, CSS, JavaScript, React</li>
+            <li><strong>AI & Data Science:</strong> TensorFlow, OpenCV</li>
+        </ul>
+    </section>
 
-    <!-- Register Service Worker -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
+</div>
+
+<!-- Register Service Worker -->
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
             .then(() => console.log("Service Worker Registered"))
             .catch(err => console.log("Service Worker Failed:", err));
+    }
+
+    // PWA INSTALL LOGIC
+    let deferredPrompt;
+    const installBtn = document.getElementById("installBtn");
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = "block";
+    });
+
+    installBtn.addEventListener("click", async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log("User choice:", outcome);
+            deferredPrompt = null;
+            installBtn.style.display = "none";
         }
-
-        // PWA Install Logic
-        let deferredPrompt;
-        const installBtn = document.getElementById("installBtn");
-
-        window.addEventListener("beforeinstallprompt", (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.style.display = "block";
-        });
-
-        installBtn.addEventListener("click", async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log("User choice:", outcome);
-                deferredPrompt = null;
-                installBtn.style.display = "none";
-            }
-        });
-    </script>
+    });
+</script>
 
 </body>
 </html>
