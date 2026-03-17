@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Shishirise</title>
 
 <link rel="manifest" href="/manifest.json">
@@ -53,6 +52,19 @@ section {
     width: 70%;
     padding: 5px;
 }
+
+/* 🔥 TOP NOTIFICATION */
+#topNotif {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    transition: 0.5s;
+}
 </style>
 </head>
 
@@ -61,7 +73,6 @@ section {
 <header>
 <h1>Shishir Adhikari</h1>
 <p>Software Developer | AI Enthusiast</p>
-
 <button onclick="enableNotifications()">🔔 Enable Notifications</button>
 </header>
 
@@ -72,6 +83,9 @@ section {
 </section>
 </div>
 
+<!-- 🔥 TOP POPUP -->
+<div id="topNotif"></div>
+
 <!-- CHAT -->
 <div id="chatBox">
 <div id="chatMessages"></div>
@@ -81,9 +95,10 @@ section {
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
 
+// 🔥 Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyARBw3pgnhRbEjxywrKIWTftMsA1KPVf8g",
   authDomain: "shishirise.firebaseapp.com",
@@ -95,6 +110,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const messaging = getMessaging(app);
+
+// 🔥 TOP POPUP FUNCTION
+const notif = document.getElementById("topNotif");
+
+function showTopNotification(text) {
+  notif.innerText = "💬 " + text;
+  notif.style.top = "20px";
+
+  setTimeout(() => {
+    notif.style.top = "-100px";
+  }, 3000);
+}
 
 // 🔔 ENABLE NOTIFICATIONS
 window.enableNotifications = async function() {
@@ -110,6 +137,12 @@ window.enableNotifications = async function() {
   }
 };
 
+// 🔥 FOREGROUND PUSH MESSAGE
+onMessage(messaging, (payload) => {
+  const text = payload.notification?.body || "New Message";
+  showTopNotification(text);
+});
+
 // 💬 SEND MESSAGE
 window.sendMessage = async function() {
   const msg = document.getElementById("msg").value;
@@ -121,22 +154,29 @@ window.sendMessage = async function() {
   });
 
   document.getElementById("msg").value = "";
-
-  // 🔔 Notification (when open)
-  if (Notification.permission === "granted") {
-    new Notification("New Message", {
-      body: msg
-    });
-  }
 };
 
 // 💬 REAL-TIME CHAT
 const chatDiv = document.getElementById("chatMessages");
 
-onSnapshot(collection(db, "messages"), (snapshot) => {
+const q = query(collection(db, "messages"), orderBy("time"));
+
+onSnapshot(q, (snapshot) => {
   chatDiv.innerHTML = "";
+
   snapshot.forEach(doc => {
     chatDiv.innerHTML += `<div>${doc.data().text}</div>`;
+  });
+
+  chatDiv.scrollTop = chatDiv.scrollHeight;
+});
+
+// 🔥 POPUP WHEN NEW MESSAGE COMES
+onSnapshot(q, (snapshot) => {
+  snapshot.docChanges().forEach(change => {
+    if (change.type === "added") {
+      showTopNotification(change.doc.data().text);
+    }
   });
 });
 </script>
