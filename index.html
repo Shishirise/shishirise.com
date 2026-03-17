@@ -6,15 +6,11 @@
 
 <title>Shishirise</title>
 
-<link rel="icon" href="shishir192.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#000">
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #fff;
-    color: #000;
-}
+body { font-family: Arial; margin: 0; background: #fff; }
 
 header {
     text-align: center;
@@ -31,33 +27,25 @@ section {
     background: #fff;
     padding: 20px;
     margin: 20px 0;
-    border-radius: 10px;
     box-shadow: 0 0 10px #ccc;
+    border-radius: 10px;
 }
 
-/* ================= CHAT BOX ================= */
+/* CHAT BOX */
 #chatBox {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 260px;
+    width: 270px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 0 10px #aaa;
     padding: 10px;
-    z-index: 9999;
-}
-
-#chatHeader {
-    font-weight: bold;
-    margin-bottom: 10px;
 }
 
 #chatMessages {
     height: 180px;
     overflow-y: auto;
-    border: 1px solid #eee;
-    padding: 5px;
     margin-bottom: 10px;
 }
 
@@ -65,51 +53,64 @@ section {
     width: 70%;
     padding: 5px;
 }
-
-button {
-    padding: 6px;
-}
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>Shishir Adhikari</h1>
-    <p>Software Developer | AI Enthusiast</p>
+<h1>Shishir Adhikari</h1>
+<p>Software Developer | AI Enthusiast</p>
+
+<button onclick="enableNotifications()">🔔 Enable Notifications</button>
 </header>
 
 <div class="container">
-    <section>
-        <h2>About</h2>
-        <p>Welcome to Shishirise portfolio.</p>
-    </section>
+<section>
+<h2>About</h2>
+<p>Welcome to Shishirise portfolio.</p>
+</section>
 </div>
 
-<!-- ================= FIREBASE CHAT ================= -->
+<!-- CHAT -->
 <div id="chatBox">
-    <div id="chatHeader">💬 Chat</div>
-    <div id="chatMessages"></div>
-    <input id="msg" placeholder="Type message..." />
-    <button onclick="sendMessage()">Send</button>
+<div id="chatMessages"></div>
+<input id="msg" placeholder="Type message..." />
+<button onclick="sendMessage()">Send</button>
 </div>
 
-<!-- ================= FIREBASE ================= -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyARBw3pgnhRbEjxywrKIWTftMsA1KPVf8g",
   authDomain: "shishirise.firebaseapp.com",
   projectId: "shishirise",
+  messagingSenderId: "488840494684",
+  appId: "1:488840494684:web:446724e7de437d510f3099"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const messaging = getMessaging(app);
 
-// SEND MESSAGE
+// 🔔 ENABLE NOTIFICATIONS
+window.enableNotifications = async function() {
+  const permission = await Notification.requestPermission();
+
+  if (permission === "granted") {
+    const token = await getToken(messaging, {
+      vapidKey: "BECsh4K2WcHyMk7irq63lr1p1n8E7C17qmuefr4Uewjo-1Rc5ABCFnA0-Xlh30Df9Zx0XlKxygmW_wwh7di8tb8"
+    });
+
+    console.log("TOKEN:", token);
+    alert("Notifications enabled!");
+  }
+};
+
+// 💬 SEND MESSAGE
 window.sendMessage = async function() {
   const msg = document.getElementById("msg").value;
   if (!msg) return;
@@ -120,43 +121,24 @@ window.sendMessage = async function() {
   });
 
   document.getElementById("msg").value = "";
+
+  // 🔔 Notification (when open)
+  if (Notification.permission === "granted") {
+    new Notification("New Message", {
+      body: msg
+    });
+  }
 };
 
-// RECEIVE REAL-TIME
+// 💬 REAL-TIME CHAT
 const chatDiv = document.getElementById("chatMessages");
 
 onSnapshot(collection(db, "messages"), (snapshot) => {
   chatDiv.innerHTML = "";
   snapshot.forEach(doc => {
-    const data = doc.data();
-    chatDiv.innerHTML += `<div>${data.text}</div>`;
+    chatDiv.innerHTML += `<div>${doc.data().text}</div>`;
   });
 });
-</script>
-
-<!-- ================= LIVECHAT (OLD CHATBOT) ================= -->
-<script>
-window.__lc = window.__lc || {};
-window.__lc.license = 19594297;
-
-(function(n,t,c){
-function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}
-var e={_q:[],_h:null,_v:"2.0",
-on:function(){i(["on",c.call(arguments)])},
-once:function(){i(["once",c.call(arguments)])},
-off:function(){i(["off",c.call(arguments)])},
-get:function(){if(!e._h)throw new Error("LiveChat not loaded");
-return i(["get",c.call(arguments)])},
-call:function(){i(["call",c.call(arguments)])},
-init:function(){
-var n=t.createElement("script");
-n.async=true;
-n.src="https://cdn.livechatinc.com/tracking.js";
-t.head.appendChild(n);}
-};
-e.init();
-n.LiveChatWidget=n.LiveChatWidget||e;
-})(window,document,[].slice);
 </script>
 
 </body>
