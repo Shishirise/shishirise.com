@@ -1,6 +1,5 @@
-
-importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js');
+importScripts("https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js");
 
 firebase.initializeApp({
   apiKey: "AIzaSyARBw3pgnhRbEjxywrKIWTftMsA1KPVf8g",
@@ -12,7 +11,6 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// 🔔 Background notification (when app closed)
 messaging.onBackgroundMessage(function(payload) {
   self.registration.showNotification(payload.notification.title, {
     body: payload.notification.body,
