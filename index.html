@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Shishirise</title>
+
+<!-- SEO -->
+<meta name="description" content="Shishir Adhikari - Software Developer, AI Enthusiast, Portfolio">
+<meta name="keywords" content="Shishir, Software Developer, AI, Portfolio, GitHub">
+
+<!-- Favicon -->
+<link rel="icon" href="shishir192.png">
 
 <!-- PWA -->
 <link rel="manifest" href="/manifest.json">
@@ -53,8 +61,13 @@ section {
     background: #fff;
     padding: 20px;
     margin: 20px 0;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 0 10px #ccc;
+    transition: transform 0.3s ease;
+}
+
+section:hover {
+    transform: scale(1.02);
 }
 
 a {
@@ -94,11 +107,12 @@ a:hover {
 <header>
     <img src="https://thumbs2.imgbox.com/dc/aa/0NkmksLa_t.png" alt="Shishir Adhikari">
 
-    <button id="installBtn">Install</button>
+    <button id="installBtn">Install App</button>
 
     <h1>Shishir Adhikari</h1>
     <p>Computer Science Undergraduate | Software Developer | Game Developer</p>
     <p>Contact: 682-344-8720 | shishiradhikari2058@gmail.com | Wichita Falls, TX</p>
+
     <p>
         <a href="https://www.linkedin.com/in/shishir-adhikari-6b07ba22a/" target="_blank" class="linkedin">🔗 LinkedIn</a> |
         <a href="https://github.com/Shishirise" target="_blank" class="github">💻 GitHub</a>
@@ -109,12 +123,12 @@ a:hover {
 
     <section>
         <h2>About Me</h2>
-        <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design. With a background in algorithmic problem-solving and system development, I constantly seek innovative ways to bridge the gap between technology and real-world challenges.</p>
+        <p>I am a passionate Computer Science student with a strong interest in software development, artificial intelligence, and game design. I focus on building real-world solutions that connect technology with practical problems.</p>
     </section>
 
     <section>
         <h2>Education</h2>
-        <p>Pursuing a Bachelor’s degree in Computer Science at Midwestern State University, Texas.</p>
+        <p>Bachelor’s degree in Computer Science at Midwestern State University, Texas.</p>
     </section>
 
     <section>
@@ -126,7 +140,7 @@ a:hover {
     <section>
         <h2>Projects</h2>
         <h3>Mega Millions Lottery Simulation</h3>
-        <p>Designed a C++ lottery simulation using OOP principles.</p>
+        <p>Designed a C++ lottery simulation using object-oriented programming principles.</p>
     </section>
 
     <section>
@@ -145,33 +159,21 @@ a:hover {
    SERVICE WORKER
 ========================= */
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js');
+    navigator.serviceWorker.register('/service-worker.js')
+    .then(() => console.log("Service Worker Registered"));
 }
 
 /* =========================
-   INSTALL LOGIC
+   INSTALL LOGIC (FIXED)
 ========================= */
 let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
 
-function isIOS() {
-    return /iphone|ipad|ipod/i.test(navigator.userAgent);
-}
-
-function isStandalone() {
-    return window.matchMedia('(display-mode: standalone)').matches ||
-           window.navigator.standalone === true;
-}
-
-/* Show button if not installed */
-if (!isStandalone()) {
-    installBtn.style.display = "inline-block";
-}
-
-/* Chrome install event */
+/* Show install button ONLY when available */
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
+    installBtn.style.display = "inline-block";
 });
 
 /* Install click */
@@ -181,15 +183,17 @@ installBtn.addEventListener('click', async () => {
         deferredPrompt.prompt();
         await deferredPrompt.userChoice;
         deferredPrompt = null;
+        installBtn.style.display = "none";
         return;
     }
 
-    if (isIOS()) {
+    /* iPhone manual install */
+    if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
         alert(
             "To install on iPhone:\n\n" +
-            "1. Open this site in Safari\n" +
-            "2. Tap the Share button\n" +
-            "3. Tap 'Add to Home Screen'"
+            "1. Open in Safari\n" +
+            "2. Tap Share\n" +
+            "3. Add to Home Screen"
         );
         return;
     }
@@ -197,6 +201,46 @@ installBtn.addEventListener('click', async () => {
     alert("Install not supported in this browser. Use Chrome.");
 });
 </script>
+
+<!-- =========================
+     LIVECHAT (FIXED POSITION)
+========================= -->
+<script>
+window.__lc = window.__lc || {};
+window.__lc.license = 19594297;
+window.__lc.integration_name = "manual_onboarding";
+window.__lc.product_name = "livechat";
+
+(function(n,t,c){
+    function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}
+    var e={
+        _q:[],_h:null,_v:"2.0",
+        on:function(){i(["on",c.call(arguments)])},
+        once:function(){i(["once",c.call(arguments)])},
+        off:function(){i(["off",c.call(arguments)])},
+        get:function(){
+            if(!e._h)throw new Error("LiveChat not loaded");
+            return i(["get",c.call(arguments)])
+        },
+        call:function(){i(["call",c.call(arguments)])},
+        init:function(){
+            var n=t.createElement("script");
+            n.async=true;
+            n.type="text/javascript";
+            n.src="https://cdn.livechatinc.com/tracking.js";
+            t.head.appendChild(n);
+        }
+    };
+    e.init();
+    n.LiveChatWidget=n.LiveChatWidget||e;
+})(window,document,[].slice);
+</script>
+
+<noscript>
+<a href="https://www.livechat.com/chat-with/19594297/" target="_blank">
+Chat with us
+</a>
+</noscript>
 
 </body>
 </html>
